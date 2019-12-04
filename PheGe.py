@@ -7,6 +7,7 @@ import pandas as pd
 
 RED_TEXT = '\033[31m'
 
+
 class PheGe:
 
     """
@@ -14,6 +15,7 @@ class PheGe:
     Reads in the network from the pickle
     Define some test data sets
     """
+
     def __init__(self):
         # Initialize member variables
         self.source_ids = None
@@ -30,6 +32,7 @@ class PheGe:
     """
     Given a set of paths create a directed network saved in the member variable self.small_graph 
     """
+
     def make_network_of_paths(self, paths):
         self.small_graph = nx.DiGraph()
         for path in paths:
@@ -39,6 +42,7 @@ class PheGe:
     """
     Find a path between a given source and target node
     """
+
     def single_search(self, source, target):
         return nx.shortest_path(self.G, source=source, target=target)
 
@@ -47,6 +51,7 @@ class PheGe:
     Source and targets are taken from the member variables self.source_ids and self.target_ids
     If a path is not found, the error is handled and reported
     """
+
     def get_gene_to_pheno_path(self):
         self.paths = []
         # find paths from all sources to all targets
@@ -65,6 +70,13 @@ class PheGe:
 
         # make a smaller networks out of the paths found, save in self.small_graph
         self.make_network_of_paths(self.paths)
+
+    """
+    Plots the information currently stored in self.small_graph
+    webweb (boolean) 
+        True: plot the network using the webweb internet display
+        False: plot the network using the default networkx functionality
+    """
 
     def plot(self, webweb=False):
         # Initialize all nodes in network with and empty name
@@ -105,10 +117,25 @@ class PheGe:
             w.display.colorBy = 'degree'
             w.show()
 
+    """
+    Reads in the given filepath provided as filename
+    Returns list of ids and list of labels
+    Assumptions:
+    1. Files is a csv
+    2. There are not column names or headers
+    3. The first column contains the ids
+    4. The second column contains the labels
+    """
+
     def read_file(self, filename):
         # read files in assuming there is are no headers and everything is a string (so leading 0's are not removed)
         sources = pd.read_csv(filename, header=None, dtype=object)
         return list(sources.iloc[:, 0]), list(sources.iloc[:, 1])
+
+    """
+    Takes the path to the source and target file. 
+    Reads them in and store information in self.source_ids, self.source_labels, self.target_ids, self.target_labels
+    """
 
     def load_files(self, source_file, target_file):
         self.source_ids, self.source_labels = self.read_file(source_file)
@@ -120,4 +147,3 @@ if __name__ == "__main__":
     p.load_files('eeie-id-name.csv', 'eeie-targets.csv')
     p.get_gene_to_pheno_path()
     p.plot(True)
-
