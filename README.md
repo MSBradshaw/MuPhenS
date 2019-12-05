@@ -22,5 +22,5 @@ Proper use of PheGe Search:
 
 ### Example
 ```
-python PheGe.py eeie-id-name.csv eeie-targets.csv default network-plot.png
+python PheGe.py eeie-sources.csv eeie-targets.csv default network-plot.png
 ```
