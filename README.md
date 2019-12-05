@@ -11,7 +11,7 @@ Clone the repo and pip install the few package dependancies :grimacing:
 3. webweb 0.0.37
 4. pandas 0.25.3
 
-### Use
+### Usage
 Proper use of PheGe Search:  
 **Required Parameters:**
 1. Sources file - csv file, first column is the gene ids second column is gene labels. Do not include any header lines or column names
