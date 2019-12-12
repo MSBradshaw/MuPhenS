@@ -22,5 +22,5 @@ Proper use of MuPhenS:
 
 ### Example
 ```
-python PheGe.py eeie-sources.csv eeie-targets.csv default network-plot.png
+python MuPhenS.py eeie-sources.csv eeie-targets.csv default network-plot.png
 ```
