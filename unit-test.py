@@ -1,36 +1,36 @@
-import PheGe as pg
+import MuPhenS as muph
 import networkx as nx
 
 def test_init():
-    p = pg.PheGe()
+    muphen = muph.MuPhenS()
 
     # validate that all variables are initialized as expected
-    assert len(p.source_ids) == 0, 'length of PheGe.source_ids should be 0'
-    assert len(p.source_labels) == 0, 'length of PheGe.source_labels should be 0'
-    assert len(p.target_ids) == 0, 'length of PheGe.target_ids should be 0'
-    assert len(p.target_labels) == 0, 'length of PheGe.target_labels should be 0'
-    assert p.paths is None, 'PheGe.paths should be None'
-    assert p.small_graph is None, 'PheGe.small_graph should be None'
-    assert p.webweb is None, 'PheGe.webweb should be None'
-    assert p.outputfile == 'network-plot.png', 'PheGe.outputfile should be "network-plot.png"'
+    assert len(muphen.source_ids) == 0, 'length of MuPhenS.source_ids should be 0'
+    assert len(muphen.source_labels) == 0, 'length of MuPhenS.source_labels should be 0'
+    assert len(muphen.target_ids) == 0, 'length of MuPhenS.target_ids should be 0'
+    assert len(muphen.target_labels) == 0, 'length of MuPhenS.target_labels should be 0'
+    assert muphen.paths is None, 'MuPhenS.paths should be None'
+    assert muphen.small_graph is None, 'MuPhenS.small_graph should be None'
+    assert muphen.webweb is None, 'MuPhenS.webweb should be None'
+    assert muphen.outputfile == 'network-plot.png', 'MuPhenS.outputfile should be "network-plot.png"'
 
     # validate that the network read in correctly
-    assert p.G is not None, 'PheGe.G should be a networkx object, not None'
+    assert muphen.G is not None, 'MuPhenS.G should be a networkx object, not None'
 
     # validate number of nodes and edges in G
-    assert len(p.G.nodes) == 109272, 'The number of nodes in G should be 109272 not ' + str(len(p.G.nodes))
-    assert len(p.G.edges) == 1461016, 'The number of edges in G should be 1461016 not ' + str(len(p.G.edges))
+    assert len(muphen.G.nodes) == 109272, 'The number of nodes in G should be 109272 not ' + str(len(muphen.G.nodes))
+    assert len(muphen.G.edges) == 1461016, 'The number of edges in G should be 1461016 not ' + str(len(muphen.G.edges))
 
 
 def test_single_search():
-    p = pg.PheGe()
+    muphen = muph.MuPhenS()
 
     # Test short path, length 3
     # KCNQ2
     source = '<http://purl.uniprot.org/geneid/3785>'
     # Infantile spasms
     target = '<http://purl.obolibrary.org/obo/HP_0012469>'
-    path = p.single_search(source, target)
+    path = muphen.single_search(source, target)
     assert len(path) == 3, 'path should be length 3'
 
     # Test path no found
@@ -41,7 +41,7 @@ def test_single_search():
     found = False
     path = None
     try:
-        path = p.single_search(source, target)
+        path = muphen.single_search(source, target)
         found = True
     except nx.exception.NetworkXNoPath:
         found = False
