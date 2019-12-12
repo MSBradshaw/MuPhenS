@@ -30,7 +30,7 @@ class MuPhenS:
         self.outputfile = 'network-plot.png'
         # Load the network from the pickle
         self.G = None
-        with (open('network.gpickle', 'rb')) as openfile:
+        with (open('named-network.pickle', 'rb')) as openfile:
             self.G = pickle.load(openfile)
 
     """
@@ -44,6 +44,11 @@ class MuPhenS:
                 self.small_graph.add_edge(path[i], path[i + 1])
             if len(path) is 1:
                 self.small_graph.add_node(path[0])
+        # give all node in small_graph a meaningfull name from the large network
+        nx.set_node_attributes(self.small_graph, '', 'Name')
+        for n in self.small_graph.nodes:
+            self.small_graph.nodes[n]['Name'] = self.G.nodes[n]['Name']
+
 
     """
     Find a path between a given source and target node
@@ -86,19 +91,6 @@ class MuPhenS:
     """
 
     def plot(self):
-        # Initialize all nodes in network with and empty name
-        nx.set_node_attributes(self.small_graph, '', 'Name')
-
-        # Give all genes a proper name
-        for i in range(len(self.source_ids)):
-            n = self.source_ids[i]
-            self.small_graph.nodes[n]['Name'] = self.source_labels[i]
-
-        # Give all genes a proper name
-        for i in range(len(self.target_ids)):
-            n = self.target_ids[i]
-            self.small_graph.nodes[n]['Name'] = self.target_labels[i]
-
         # Extract the labels from the network
         labels = nx.get_node_attributes(self.small_graph, 'Name')
 
